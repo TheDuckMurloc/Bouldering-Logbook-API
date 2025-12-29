@@ -1,4 +1,4 @@
-name: Build and Deploy 
+name: Build and Deploy
 
 on:
   push:
@@ -20,13 +20,15 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Maven
+        working-directory: boulderlogbook
         run: mvn -B clean package
 
       - name: Run tests
+        working-directory: boulderlogbook
         run: mvn test
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
           name: app
-          path: target/*.jar
+          path: boulderlogbook/target/*.jar
