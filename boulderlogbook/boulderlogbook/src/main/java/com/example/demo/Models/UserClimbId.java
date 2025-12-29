@@ -7,35 +7,35 @@ import java.util.Objects;
 @Embeddable
 public class UserClimbId implements Serializable {
 
-    private Integer userId;
-    private Integer climbId;
+    private int userId;
+    private int climbId;
 
     public UserClimbId() {}
 
-    public UserClimbId(Integer userId, Integer climbId) {
+    public UserClimbId(int userId, int climbId) {
         this.userId = userId;
         this.climbId = climbId;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public Integer getClimbId() {
-        return climbId;
-    }
-
+    // equals & hashCode
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserClimbId)) return false;
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
         UserClimbId that = (UserClimbId) o;
-        return Objects.equals(userId, that.userId) &&
-               Objects.equals(climbId, that.climbId);
+        return userId == that.userId && climbId == that.climbId;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(userId, climbId);
     }
+
+    // getters & setters
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
+
+    public int getClimbId() { return climbId; }
+    public void setClimbId(int climbId) { this.climbId = climbId; }
 }
+

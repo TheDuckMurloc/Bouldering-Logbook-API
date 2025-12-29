@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "locations")
+@Table(name = "Location")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,23 @@ public class Location {
 
     @OneToMany(mappedBy = "location")
     private List<Session> sessions;
+    
+    public String getName() {
+        return name;
+    }
+
+    public int getLocationID() {
+    return locationID;
+}
+
+public String getRegion() {
+    return region;
+}
+
+public String getAddress() {
+    return address;
+}
+
+
 
 }

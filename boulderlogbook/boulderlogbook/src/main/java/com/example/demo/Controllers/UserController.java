@@ -1,6 +1,8 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.DTOs.UserDTO;
 import com.example.demo.Models.User;
+import com.example.demo.Models.UserClimb;
 import com.example.demo.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -39,4 +42,16 @@ public class UserController {
     public Optional<User> getUserByName(@RequestParam String name) {
         return userService.getUserByName(name);
     }
+
+     @GetMapping("/{userId}/climbs")
+    public List<UserClimb> getUserClimbs(@PathVariable int userId) {
+        return userService.getUserClimbs(userId);
+    }
+    @GetMapping("/{userId}/dto")
+    public UserDTO getUserDto(@PathVariable int userId) {
+        return userService.getUserById(userId)
+            .map(user -> new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getProfilePhoto(), user.getJoinDate()))
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
 }

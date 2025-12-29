@@ -1,11 +1,12 @@
 package com.example.demo.Models;
 
+
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "[User]")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +27,6 @@ public class User {
     private String profilePhoto;
 
     @OneToMany(mappedBy = "user")
-    private List<Climb> climbs;
-
-    @OneToMany(mappedBy = "user")
     private List<Goal> goals;
 
     @OneToMany(mappedBy = "user")
@@ -37,7 +35,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Session> sessions;
 
-    public int getId() {
-        return userID;
-    }
+    public int getId() { return userID; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }  
+    public String getPasswordHash() { return passwordHash; }
+    public Date getJoinDate() { return joinDate; }
+    public String getProfilePhoto() { return profilePhoto; }
 }

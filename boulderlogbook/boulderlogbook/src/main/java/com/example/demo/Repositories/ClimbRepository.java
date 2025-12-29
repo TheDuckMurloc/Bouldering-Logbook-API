@@ -8,8 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ClimbRepository extends JpaRepository<Climb, Integer> {
-
-    List<Climb> findByUser_UserID(int userID);
-
     List<Climb> findByLocation_LocationID(int locationID);
 }

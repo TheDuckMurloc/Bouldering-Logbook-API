@@ -5,41 +5,54 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "climbs")
+@Table(name = "Climb")
 public class Climb {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int climbID;
+    @Column(name = "ClimbID")
+    private int id;
 
     @ManyToOne
-    @JoinColumn(name = "userID", nullable = false)
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "locationID")
+    @JoinColumn(name = "LocationID")
     private Location location;
 
+    @Column(name = "Date")
     @Temporal(TemporalType.DATE)
     private Date date;
 
+    @Column(name = "Grade")
     private String grade;
-    private String ascentType;
-    private int attempts;
-    private String notes;
-    private int duration;
+
+    @Column(name = "Photo")
     private String photo;
 
     @ManyToMany
     @JoinTable(
-        name = "climb_style_tags",
-        joinColumns = @JoinColumn(name = "climbID"),
-        inverseJoinColumns = @JoinColumn(name = "tagID")
+        name = "ClimbStyleTag",
+        joinColumns = @JoinColumn(name = "ClimbID"),
+        inverseJoinColumns = @JoinColumn(name = "TagID")
     )
     private List<StyleTag> styleTags;
 
-    public int getId() {
-        return climbID;
-    }
+    public Climb() {}
 
-    
+    // Getters & Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public Location getLocation() { return location; }
+    public void setLocation(Location location) { this.location = location; }
+
+    public Date getDate() { return date; }
+    public void setDate(Date date) { this.date = date; }
+
+    public String getGrade() { return grade; }
+    public void setGrade(String grade) { this.grade = grade; }
+
+    public String getPhoto() { return photo; }
+    public void setPhoto(String photo) { this.photo = photo; }
+
+    public List<StyleTag> getStyleTags() { return styleTags; }
+    public void setStyleTags(List<StyleTag> styleTags) { this.styleTags = styleTags; }
 }
