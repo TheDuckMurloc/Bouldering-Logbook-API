@@ -2,7 +2,7 @@ package com.example.demo.Models;
 
 import jakarta.persistence.*;
 import java.util.Date;
-
+// CD Check
 @Entity
 @Table(name = "Goal")
 public class Goal {
