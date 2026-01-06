@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import main.java.com.example.demo.Repositories.UserRepository;
-import main.java.com.example.demo.Models.User;
+import com.example.demo.Repositories.UserRepository;
+import com.example.demo.Models.User;
 import main.java.com.example.demo.DTOs.LoginRequest;
 import main.java.com.example.demo.DTOs.LoginResponse;
 import main.java.com.example.demo.Services.AuthService;
