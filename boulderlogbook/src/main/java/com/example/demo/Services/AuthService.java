@@ -32,10 +32,10 @@ public class AuthService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        Long userId = (long) user.getId();
+            Long userId = user.getId();   
 
-String token = jwtService.generateToken(userId);
-return new LoginResponse(token, userId);
+    String token = jwtService.generateToken(userId);
+    return new LoginResponse(token, userId);
 
 
         return new LoginResponse(token, user.getId());
