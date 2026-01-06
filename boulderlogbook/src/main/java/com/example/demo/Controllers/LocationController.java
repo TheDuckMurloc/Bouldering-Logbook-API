@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/locations")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://bouldering-logbook-user-frontend.onrender.com")
 public class LocationController {
 
     private final LocationService locationService;
