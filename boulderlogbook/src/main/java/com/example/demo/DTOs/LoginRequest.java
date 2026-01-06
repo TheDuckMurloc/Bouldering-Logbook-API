@@ -1,4 +1,4 @@
-package main.java.com.example.demo.DTOs;
+package com.example.demo.DTOs;
 
 public class LoginRequest {
     private String email;

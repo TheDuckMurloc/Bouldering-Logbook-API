@@ -1,15 +1,14 @@
-package main.java.com.example.demo.Controllers;
+package com.example.demo.Controllers;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.example.demo.Repositories.UserRepository;
-import com.example.demo.Models.User;
-import main.java.com.example.demo.DTOs.LoginRequest;
-import main.java.com.example.demo.DTOs.LoginResponse;
-import main.java.com.example.demo.Services.AuthService;
+import com.example.demo.Services.AuthService;
+import com.example.demo.DTOs.LoginRequest;
+import com.example.demo.DTOs.LoginResponse;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -21,7 +20,6 @@ public class AuthController {
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
-  
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
