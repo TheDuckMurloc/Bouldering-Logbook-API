@@ -44,14 +44,20 @@ public class SecurityConfig {
                     "/v3/api-docs/**"
                 ).permitAll()
 
+                // ✅ EXPLICIET: /me (CLIMBER + ADMIN)
+                .requestMatchers(
+                    "/api/user-climbs/me",
+                    "/api/user-climbs/log"
+                ).hasAnyRole("CLIMBER", "ADMIN")
+
                 // ADMIN ONLY
                 .requestMatchers(
                     "/api/climbs/{id}/deactivate",
                     "/api/locations/create",
                     "/api/climbs/create"
-                ).hasAnyRole("ADMIN")
+                ).hasRole("ADMIN")
 
-                // USER + ADMIN
+                // OVERIGE SECURED ENDPOINTS
                 .requestMatchers(
                     "/api/locations/**",
                     "/api/goals/**",
@@ -61,7 +67,6 @@ public class SecurityConfig {
                     "/api/user-climbs/**"
                 ).hasAnyRole("CLIMBER", "ADMIN")
 
-                // FALLBACK
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -69,3 +74,4 @@ public class SecurityConfig {
         return http.build();
     }
 }
+
