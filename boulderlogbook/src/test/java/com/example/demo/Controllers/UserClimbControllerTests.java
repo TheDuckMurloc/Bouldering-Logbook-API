@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -39,10 +40,14 @@ public class UserClimbControllerTests {
             .andExpect(status().isUnauthorized());
     }
 
-    /* ---------- GET /api/user-climbs/user/{userId} ---------- */
     @Test
-    void getUserClimbs_returnsOk() throws Exception {
-        mockMvc.perform(get("/api/user-climbs/user/1"))
-            .andExpect(status().isOk());
-    }
+@WithMockUser(
+    username = "1",      
+    roles = { "CLIMBER" }
+)
+void getMyClimbs_returnsOk() throws Exception {
+    mockMvc.perform(get("/api/user-climbs/me"))
+        .andExpect(status().isOk());
+}
+
 }

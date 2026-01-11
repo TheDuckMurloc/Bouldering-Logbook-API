@@ -60,16 +60,17 @@ public class UserClimbController {
         return ResponseEntity.ok(userClimb);
     }
     
-    @GetMapping("/me")
-    public ResponseEntity<List<UserClimb>> getMyClimbs(Authentication authentication) {
-        if (authentication == null || authentication.getPrincipal() == null) {
-            return ResponseEntity.status(401).build();
-        }
-
-        int userId = Integer.parseInt(authentication.getPrincipal().toString());
-
-        return ResponseEntity.ok(
-            userClimbService.getUserClimbsByUserId(userId)
-        );
+   @GetMapping("/me")
+public ResponseEntity<List<UserClimb>> getMyClimbs(Authentication authentication) {
+    if (authentication == null) {
+        return ResponseEntity.status(401).build();
     }
+
+    int userId = Integer.parseInt(authentication.getName());
+
+    return ResponseEntity.ok(
+        userClimbService.getUserClimbsByUserId(userId)
+    );
+}
+
 }
