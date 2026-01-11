@@ -49,17 +49,17 @@ public class SecurityConfig {
                     "/api/climbs/{id}/deactivate",
                     "/api/locations/create",
                     "/api/climbs/create"
-                ).hasRole("ADMIN")
+                ).hasAuthority("ADMIN")
 
                 // USER + ADMIN
                 .requestMatchers(
                     "/api/locations/**",
-                    "api/goals/**",
+                    "/api/goals/**",
                     "/api/style-tags/**",
                     "/api/climbs/**",
                     "/api/users/**",
                     "/api/user-climbs/**"
-                ).hasAnyRole("CLIMBER", "ADMIN")
+                ).hasAnyAuthority("CLIMBER", "ADMIN")
 
                 // FALLBACK
                 .anyRequest().authenticated()
