@@ -63,8 +63,7 @@ public class SecurityConfig {
                     "/api/goals/**",
                     "/api/style-tags/**",
                     "/api/climbs/**",
-                    "/api/users/**",
-                    "/api/user-climbs/**"
+                    "/api/users/**"
                 ).hasAnyRole("CLIMBER", "ADMIN")
 
                 .anyRequest().authenticated()
