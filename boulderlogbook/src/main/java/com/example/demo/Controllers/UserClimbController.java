@@ -8,6 +8,8 @@ import com.example.demo.Services.GoalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class UserClimbController {
 
     private final UserClimbService userClimbService;
     private final GoalService goalService;
+    private static final Logger logger = LoggerFactory.getLogger(UserClimbController.class);
 
     public UserClimbController(
             UserClimbService userClimbService,
@@ -37,7 +40,10 @@ public class UserClimbController {
             Authentication authentication,
             @RequestBody LogUserClimbDTO dto
     ) {
+        logger.debug("logBoulder called, authentication={}", authentication);
+
         if (authentication == null || authentication.getPrincipal() == null) {
+            logger.debug("logBoulder: no authentication present");
             return ResponseEntity.status(401).build();
         }
 
@@ -62,16 +68,18 @@ public class UserClimbController {
     
    @GetMapping("/me")
 public ResponseEntity<List<UserClimb>> getMyClimbs(Authentication authentication) {
-    if (authentication == null || authentication.getPrincipal() == null) {
+    if (authentication == null) {
+        logger.debug("getMyClimbs called without authentication");
         return ResponseEntity.status(401).build();
     }
 
-    Long userId = (Long) authentication.getPrincipal();
+    logger.debug("getMyClimbs called by name={} principal={}", authentication.getName(), authentication.getPrincipal());
+
+    int userId = Integer.parseInt(authentication.getName());
 
     return ResponseEntity.ok(
-        userClimbService.getUserClimbsByUserId(userId.intValue())
+        userClimbService.getUserClimbsByUserId(userId)
     );
 }
-
 
 }
