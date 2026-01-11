@@ -5,6 +5,7 @@ import com.example.demo.DTOs.ClimbDTO;
 import com.example.demo.Models.Climb;
 import com.example.demo.Services.ClimbService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,15 +33,15 @@ public class ClimbController {
         return climbService.getClimbById(id);
     }
 
-    @PostMapping("/create")
-public ClimbDTO createClimb(@RequestBody CreateClimbDTO request) {
+    @PostMapping
+public ResponseEntity<ClimbDTO> createClimb(@RequestBody CreateClimbDTO request) {
     Climb climb = climbService.createClimb(
         request.getGrade(),
         request.getLocationId(),
         request.getStyleTagIds()
     );
 
-    return new ClimbDTO(
+    ClimbDTO dto = new ClimbDTO(
         climb.getId(),
         climb.getGrade(),
         climb.getDate(),
@@ -48,6 +49,8 @@ public ClimbDTO createClimb(@RequestBody CreateClimbDTO request) {
         climb.getLocation().getName(),
         climb.isActive()
     );
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 }
 
 

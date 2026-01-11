@@ -1,50 +1,30 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Models.User;
-import com.example.demo.Repositories.UserRepository;
-
-import org.junit.jupiter.api.BeforeEach;
+import com.example.demo.Security.JwtAuthFilter;
+import com.example.demo.Services.AuthService;
 import org.junit.jupiter.api.Test;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.time.LocalDate;
-import java.util.Date;
-
-@SpringBootTest
-@AutoConfigureMockMvc
-@Transactional
+@WebMvcTest(AuthController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class AuthControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private UserRepository userRepository;
+    @MockBean
+    private AuthService authService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @BeforeEach
-void setup() {
-    User user = new User();
-    user.setName("test");
-    user.setEmail("test@test.com");
-    user.setPasswordHash(passwordEncoder.encode("password"));
-    user.setJoinDate(new Date()); // 👈 DIT IS DE FIX
-    user.setRole("Climber");
-    userRepository.save(user);
-}
-
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
 
     @Test
     void login_returnsOk() throws Exception {

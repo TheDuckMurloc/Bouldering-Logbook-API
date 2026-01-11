@@ -1,33 +1,34 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Security.TestSecurityConfig;
+import com.example.demo.Security.JwtAuthFilter;
+import com.example.demo.Services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@Import(TestSecurityConfig.class)   // ✅ DIT WAS DE MISSENDE STAP
+@WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class UserControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private UserService userService;
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
+
     @Test
     void getAllUsers_returnsOk() throws Exception {
         mockMvc.perform(get("/api/users"))
-            .andDo(print())
             .andExpect(status().isOk())
             .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
@@ -45,10 +46,10 @@ class UserControllerTests {
                 .content("""
                     {
                       "name": "Jan",
-                      "email": "jan_%d@test.com",
-                      "passwordHash": "password"
+                      "email": "jan@test.com",
+                      "password": "password"
                     }
-                """.formatted(System.currentTimeMillis())))
+                """))
             .andExpect(status().isOk());
     }
 
